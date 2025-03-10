@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import AuthService from '@/services/AuthService';
+
 export default {
   name: 'SignUpView',
   data() {
@@ -26,12 +27,12 @@ export default {
   methods: {
     async signup() {
       try {
-        await axios.post('http://localhost:3000/signup', {
-          firstname: this.firstname,
-          lastname: this.lastname,
-          email: this.email,
+        await AuthService.register({
+          firstName: this.firstname,
+          lastName: this.lastname,
+          emailId: this.email,
           password: this.password
-        }, {withCredentials: true});
+        });
         this.$router.push('/');
       } catch (error) {
         let errorMessage = 'Error signing up';

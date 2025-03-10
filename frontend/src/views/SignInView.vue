@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import AuthService from '@/services/AuthService';
+
 export default {
   name: 'SignInView',
   data() {
@@ -22,10 +23,10 @@ export default {
   methods: {
     async signin() {
       try {
-        await axios.post('http://localhost:3000/signin', {
-          email: this.email,
+        await AuthService.login({
+          emailId: this.email,
           password: this.password
-        }, {withCredentials: true});
+        });
         this.$router.push('/home');
       } catch (error) {
         let errorMessage = 'Error signing in';

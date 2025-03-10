@@ -1,42 +1,41 @@
 <template>
   <div class="home">
-    <h1 v-if="isAuthenticated">Welcome, {{ user.firstName }} {{ user.lastName }}</h1>
-    <p v-if="isAuthenticated">Email: {{ user.email }}</p>
+    <h1 v-if="isAuthenticated">Welcome, {{ user.username }}</h1>
+    <p v-if="isAuthenticated">Access Token: {{ accessToken }}</p>
+    <p v-if="isAuthenticated">Refresh Token: {{ user.refreshToken }}</p>
     <button v-if="isAuthenticated" @click="signout">Sign Out</button>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import AuthService from '@/services/AuthService';
 
 export default {
   name: 'HomeView',
   data() {
     return {
       user: {},
-      isAuthenticated: false
+      isAuthenticated: false,
+      accessToken: ''
     };
   },
-  async beforeCreate() {
-    try {
-      const response = await axios.get('http://localhost:3000/user', {withCredentials: true});
-      this.user = response.data;
+  created() {
+    const user = AuthService.getUser();
+    console.log(user);
+    if (user) {
+      this.user = user;
       this.isAuthenticated = true;
-    } catch (error) {
-      console.warn('User is not authenticated, redirecting...');
-      this.$router.push('/');
+      this.accessToken = AuthService.getAccessToken();
+    } else {
+      this.$router.push('/signin');
     }
   },
   methods: {
-    async signout() {
-      try {
-        await axios.post('http://localhost:3000/signout', {}, {withCredentials: true});
-        this.isAuthenticated = false;
-        this.user = {};
-        this.$router.push('/');
-      } catch (error) {
-        console.error('Error signing out:', error);
-      }
+    signout() {
+      AuthService.logout();
+      this.isAuthenticated = false;
+      this.user = {};
+      this.$router.push('/signin');
     }
   }
 }
