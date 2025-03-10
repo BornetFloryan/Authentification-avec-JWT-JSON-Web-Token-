@@ -1,0 +1,46 @@
+<template>
+  <div class="signup">
+    <h1>Sign Up</h1>
+    <form @submit.prevent="signup">
+      <input type="text" v-model="firstname" placeholder="First Name" required />
+      <input type="text" v-model="lastname" placeholder="Last Name" required />
+      <input type="email" v-model="email" placeholder="Email" required />
+      <input type="password" v-model="password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+export default {
+  name: 'SignUpView',
+  data() {
+    return {
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    async signup() {
+      try {
+        await axios.post('http://localhost:3000/signup', {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          password: this.password
+        }, {withCredentials: true});
+        this.$router.push('/');
+      } catch (error) {
+        let errorMessage = 'Error signing up';
+        if (error.response && error.response.data && error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+        alert(errorMessage);
+      }
+    }
+  }
+}
+</script>
