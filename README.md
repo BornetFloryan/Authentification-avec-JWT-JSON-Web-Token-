@@ -62,11 +62,11 @@ Créez un fichier `.env` à la racine du dossier `backend/` avec le contenu suiv
 
 ```env
 DB_HOST=localhost
-DB_USERNAME=postgres
-DB_PASSWORD=root
-DB_DATABASE=bdd_node_1
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+DB_DATABASE=your_database_name
 DB_PORT=5432
-AUTH_SECRET=secret
+AUTH_SECRET=your_auth_secret
 ```
 
 Chaque variable a une fonction spécifique :
