@@ -1,4 +1,3 @@
-// frontend/src/router/index.js
 import Vue from 'vue';
 import Router from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
@@ -13,7 +12,10 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/signin'
+      redirect: () => {
+        const user = localStorage.getItem('user');
+        return user ? '/home' : '/signin';
+      }
     },
     {
       path: '/home',
