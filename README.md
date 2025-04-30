@@ -56,12 +56,34 @@ git clone https://github.com/BornetFloryan/Authentification-avec-JWT-JSON-Web-To
 cd Authentification-avec-JWT
 ```
 
+### Configuration du fichier `.env`
+
+Créez un fichier `.env` à la racine du dossier `backend/` avec le contenu suivant :
+
+```env
+DB_HOST=localhost
+DB_USERNAME=postgres
+DB_PASSWORD=root
+DB_DATABASE=bdd_node_1
+DB_PORT=5432
+AUTH_SECRET=secret
+```
+
+Chaque variable a une fonction spécifique :
+
+- `DB_HOST` : l'adresse de votre serveur PostgreSQL (généralement `localhost` en local).
+- `DB_USERNAME` : le nom d'utilisateur PostgreSQL.
+- `DB_PASSWORD` : le mot de passe associé à l'utilisateur.
+- `DB_DATABASE` : le nom de la base de données à utiliser.
+- `DB_PORT` : le port sur lequel PostgreSQL écoute (par défaut `5432`).
+- `AUTH_SECRET` : la clé secrète utilisée pour signer les tokens JWT.
+
+
 #### Configurer le backend :
 ```bash
 cd backend
 npm install
 ```
-- Modifier les informations de connexion dans `.env` pour votre base de données.
 - Lancer le serveur :
 ```bash
 npm start
